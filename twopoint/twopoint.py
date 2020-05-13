@@ -310,7 +310,7 @@ class SpectrumMeasurement(object):
         b1, b2 = bin_pair
         mask = (self.bin1 == b1) * (self.bin2 == b2)
         if (mask.sum() == 0) and complain:
-            raise ValueError("""You tried to cut bin pair %d,%d from spectrum named %s 
+            raise ValueError("""You tried to cut bin pair %d,%d from spectrum named %s
                              but it doesn't exist""" % (b1, b2, self.name))
         elif mask.sum() > 0:
             self.apply_mask(~mask)
@@ -533,7 +533,7 @@ class CovarianceMatrixInfo(object):
     @classmethod
     def from_spec_lists(cls, spec_lists, cov_name, mode='full'):
         """Often the covariance will be computed by measuring the statistic(s) in question
-        on many simulated realisations of the dataset. This function takes a list of such 
+        on many simulated realisations of the dataset. This function takes a list of such
         measurements, *each one a list SpectrumMeasurement objects*, computes the mean and covariance, and
         returns the mean as a list of SpectrumMeasurements, and the covariance as a CovarianceMatrixInfo
         object. mode should be one of full, subsample or jackknife"""
@@ -892,7 +892,7 @@ class TwoPointFile(object):
 
     def plots(self, root, colormap='viridis', savepdf=False, latex=True, plot_spectrum=True, plot_kernel=True, plot_cov=True, cov_vmin=None, sharey=True, save_pickle=False, load_pickle=False, remove_pickle=True,label_legend ='', blind_yaxis=False, shade_until=None, callback=None):
         """
-        Makes plot of each for your spectra, kernels and covariance. Allows you to compare the spectra of different files. 
+        Makes plot of each for your spectra, kernels and covariance. Allows you to compare the spectra of different files.
         Options:
         - root: Name of the output plots.
         - colormap: Colormap used for the plots.
@@ -906,7 +906,7 @@ class TwoPointFile(object):
         - load_pickle: if true, it will continue the plot starting from a pickle file.
         - remove_pickle: set to true if you want to keep this file to edit your plot afterwards.
         - label_legend: name that will appear in the legend when comparing different files.
-        - blind_axis: True if you want to remove the y-axis labels. 
+        - blind_axis: True if you want to remove the y-axis labels.
         - shade_until: List of maximum scale to be shaded with length of lens bins for cross-correlations, or lens/source bins for auto-correlations.
         """
 
@@ -1019,7 +1019,7 @@ class TwoPointFile(object):
                     i,j = pair
                     theta, xi = spectrum.get_pair(i,j)
                     error = spectrum.get_error(i,j)
-                
+
                     ax[j-1][i-1].errorbar(theta, abs(xi), yerr = error, fmt = mtype, capsize=1.4, markersize=1.5, color = color, mec = color, elinewidth=0.5, markeredgewidth=0.5, label = label_legend)
                     ax[j-1][i-1].text(0.85, 0.85, "{},{}".format(i, j), horizontalalignment='center',
                                       verticalalignment='center', transform=ax[j-1][i-1].transAxes, fontsize=12)
@@ -1050,7 +1050,7 @@ class TwoPointFile(object):
                     savefig(name)
                 if save_pickle:
                     name_pickle = "{}_{}.pickle".format(root, spectrum.name)
-                    pl.dump(fig, file(name_pickle, 'w'))
+                    pl.dump(fig, open(name_pickle, 'w'))
 
                 plt.close()
             plt.close('all')
@@ -1153,11 +1153,11 @@ class TwoPointFile(object):
                             setattr(wtheta,x,getattr(wtheta,x)[mask])
                 wtheta.value=wtheta.value[mask]
 
-                
+
             total_length = 0
             for spec in spectra_names:
                 total_length += len(self.get_spectrum(spec))
-                
+
             remove = []
             for i in range(len(self.spectra)):
                 if self.spectra[i].name not in spectra_names:
@@ -1165,7 +1165,7 @@ class TwoPointFile(object):
 
             for i in remove:
                 del self.spectra[i]
-                
+
             return total_length
 
         # Read the covariance - concatenated output files from cosmolike
@@ -1213,7 +1213,7 @@ class TwoPointFile(object):
 
 class SpectrumCovarianceBuilder(object):
     """
-    This class helps you ensure that the ordering between a set of data points and 
+    This class helps you ensure that the ordering between a set of data points and
     their covariance is consistently maintained.  You add data points to it one by one.,
     in the order that they appear in the covariance.
 
@@ -1322,7 +1322,7 @@ class SpectrumCovarianceBuilder(object):
             spectra.append(spectrum)
 
         reordered_covariance = covariance[master_index_vector][:, master_index_vector]
-        covmat_info = CovarianceMatrixInfo("COVMAT", [s.name for s in spectra], 
+        covmat_info = CovarianceMatrixInfo("COVMAT", [s.name for s in spectra],
                                            [len(s) for s in spectra], reordered_covariance)
 
         return spectra, covmat_info
