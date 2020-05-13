@@ -1050,7 +1050,7 @@ class TwoPointFile(object):
                     savefig(name)
                 if save_pickle:
                     name_pickle = "{}_{}.pickle".format(root, spectrum.name)
-                    pl.dump(fig, open(name_pickle, 'w'))
+                    pl.dump(fig, open(name_pickle, 'wb'))
 
                 plt.close()
             plt.close('all')
